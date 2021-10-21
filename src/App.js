@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { compare } from "./versionUtil";
+import "./App.css";
 
 function App() {
+  const [versionA, setVersionA] = useState("");
+  const [versionB, setVersionB] = useState("");
+  const [result, setResult] = useState(0);
+
+  const handleCompare = (event) => {
+    const result = compare(versionA, versionB);
+    setResult(result);
+    event.preventDefault();
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Compare Version</h1>
+      <main>
+        <form onSubmit={handleCompare} className="form">
+          <label htmlFor="versionA">Enter input #1</label>
+          <input
+            id="versionA"
+            name="versionA"
+            type="text"
+            value={versionA}
+            onChange={(event) => setVersionA(event.target.value)}
+          />
+          <br />
+          <label htmlFor="versionB">Enter input #2</label>
+          <input
+            id="versionB"
+            name="versionB"
+            type="text"
+            value={versionB}
+            onChange={(event) => setVersionB(event.target.value)}
+          />
+          <br />
+          <input type="submit" value="Compare" />
+        </form>
+
+        <div className="result">Result is: {result}</div>
+      </main>
     </div>
   );
 }
